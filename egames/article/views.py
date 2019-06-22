@@ -106,14 +106,14 @@ def userLogin(request):
                 return redirect('/egame/')
             # 用户认证失败
             else:
-                return render(request, 'user/login.html', context={'contact': '用户不存在'})
+                return render(request, 'article/login.html', context={'contact': '用户不存在'})
         # 表单验证失败
         else:
             return render(request, 'article/login.html', context={'contact': emptyForm})
 
     # get请求
     else:
-        return render(request, 'user/login.html', context={'contact': emptyForm})
+        return render(request, 'article/login.html', context={'contact': emptyForm})
 
 
 
