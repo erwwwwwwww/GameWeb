@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block gamecategory %}
+    <div class="breadcrumb-area bg-img bg-overlay" style="background-image: url({% static 'img/bg-img/27.jpg' %});">
+        <div class="container h-100">
+            <div class="row h-100 align-items-center">
+                <!-- Breadcrumb Text -->
+                <div class="col-12">
+                    <div class="breadcrumb-text">
+                        <h2>游戏评分</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ##### Breadcrumb Area End ##### -->
+
+    <!-- ##### Game Review Area Start ##### -->
+    <section class="game-review-area section-padding-100">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+
+                    {% for game in gamecategory %}
+                        <div class="single-game-review-area d-flex flex-wrap mb-30">
+                        <div class="game-thumbnail">
+                            <img src="{{ game.backImage.url }}" alt="">
+                        </div>
+                        <div class="game-content">
+                            <span class="game-tag">{{ game.game_tag }}</span>
+                            <a href="{{ game.get_absolute_url }}" class="game-title">{{ game.name }}</a>
+                            <div class="game-meta">
+{#                                日期  #}
+                                <a href="#" class="game-date">{{ game.created }}</a>
+                                <a href="#" class="game-comments">2 Comments</a>
+                            </div>
+{#                            游戏简介      #}
+                            <p>{{ game.game_brief }}</p>
+                            <!-- Download & Rating Area -->
+                            <div class="download-rating-area d-flex align-items-center justify-content-between">
+                                <div class="download-area">
+                                    <a href="#"><img src="{% static 'img/core-img/app-store.png' %}" alt=""></a>
+                                    <a href="#"><img src="{% static 'img/core-img/google-play.png' %}" alt=""></a>
+                                </div>
+                                <div class="rating-area text-center">
+{#                                    游戏评分  #}
+                                    <h3>{{ game.total_score }}</h3>
+                                    <div class="stars">
+                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                        <i class="fa fa-star-half-o" aria-hidden="true"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+
+
+
+                    <!-- ### Pagination Area ### -->
+                    <nav aria-label="Page navigation example">
+                            <ul class="pagination mt-100">
+                                <li class="page-item active">
+                                    {% if gamecategory.has_previous %}
+                                        <a href="?page={{ gamecategory.previous_page_number }}">上一页</a>
+                                    {% endif %}
+                                </li>
+                                <li class="page-item">Page {{ gamecategory.number }} of {{ gamecategory.paginator.num_pages }}</li>
+                                <li class="page-item">
+                                    {% if gamecategory.has_next %}
+                                        <a href="?page={{ gamecategory.next_page_number }}">下一页</a>
+                                    {% endif %}
+                                </li>
+                            </ul>
+                        </nav>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

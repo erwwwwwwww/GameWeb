@@ -1,0 +1,139 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block gamedetail %}
+    <!-- 游戏详情页 -->
+    <!-- ##### Breadcrumb Area Start ##### -->
+    <div class="breadcrumb-area bg-img bg-overlay" style="background-image: url({% static 'img/bg-img/27.jpg' %});">
+        <div class="container h-100">
+            <div class="row h-100 align-items-center">
+                <!-- Breadcrumb Text -->
+                <div class="col-12">
+                    <div class="breadcrumb-text">
+                        <h2>Game Review</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ##### Breadcrumb Area End ##### -->
+
+    <!-- ##### Single Game Review Area Start ##### -->
+    <section class="single-game-review-area section-padding-100">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="single-game-img-slides">
+                        <div id="gameSlides" class="carousel slide" data-ride="carousel">
+                            {# 游戏轮播图 #}
+                            <div class="carousel-inner">
+                                {% for foo in gameImage %}
+                                    <div class="
+                                    {% if forloop.counter0 == 0 %}
+                                        carousel-item active
+                                    {% else %}
+                                        carousel-item
+                                    {% endif %}">
+                                    <img class="d-block w-100" src="{{ foo.image.url }}" alt="">
+                                </div>
+                                    {% empty %}
+                                    <p>无数据</p>
+                                {% endfor %}
+                            </div>
+                            <ol class="carousel-indicators">
+                                {% for foo in gameImage %}
+                                    <li data-target="#gameSlides" data-slide-to="{{ forloop.counter0 }}" class=" {% if forloop.counter0 == 0 %}active{% endif %}" style="background-image: url({{ foo.image.url }});"></li>
+                                {% endfor %}
+
+
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row align-items-center">
+                <!-- *** 游戏评分 *** -->
+                <div class="col-12 col-md-6">
+                    <div class="single-game-review-area style-2 mt-70">
+                        <div class="game-content">
+                        	<!--游戏类型 标签 -->
+                            <span class="game-tag">{{ game.game_tag }}</span>
+                            <!--游戏名称-->
+                            <a href="{{ game.get_absolute_url }}" class="game-title">{{ game.name }}</a>
+                            <!--游戏信息-->
+                            <div class="game-meta">
+                                <a href="#" class="game-date">{{ game.date_publi }}</a>
+                                <!--<a href="#" class="game-comments">购买正版</a>
+                                <a href="#" class="game-comments">官方主页</a>-->
+                            </div>
+                            <!--游戏简介-->
+                            <p>{{ game.game_brief }}</p>
+                            <!-- Download & Rating Area -->
+                            <div class="download-rating-area">
+                                <div class="download-area">
+                                    <a href="{{ game.buy_address }}"><img src="" alt="">购买正版</a>
+                                    <a href="{{ game.official_web }}"><img src="" alt="">官方主页</a>
+                                </div>
+                                <!--游戏评分-->
+                                <div class="rating-area mt-30">
+                                    <h3>{{ game.total_score }}</h3>
+                                    <div class="stars">
+                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                        <i class="fa fa-star-half-o" aria-hidden="true"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- *** 游戏评分项 *** -->
+                <div class="col-12 col-md-6">
+                    <div class="egames-barfiller">
+                        <!-- Single Barfiller -->
+                        <div class="single-barfiller-area">
+                            <div id="bar1" class="barfiller">
+                                <span class="tip"></span>
+                                <span class="fill" data-percentage="{{ game.frame }}"></span>
+                                <p>画面</p>
+                            </div>
+                        </div>
+                        <!-- Single Barfiller -->
+                        <div class="single-barfiller-area">
+                            <div id="bar2" class="barfiller">
+                                <span class="tip"></span>
+                                <span class="fill" data-percentage="{{ game.sound_effect }}"></span>
+                                <p>音效</p>
+                            </div>
+                        </div>
+                        <!-- Single Barfiller -->
+                        <div class="single-barfiller-area">
+                            <div id="bar3" class="barfiller">
+                                <span class="tip"></span>
+                                <span class="fill" data-percentage="{{ game.plot }}"></span>
+                                <p>剧情</p>
+                            </div>
+                        </div>
+                        <!-- Single Barfiller -->
+                        <div class="single-barfiller-area">
+                            <div id="bar4" class="barfiller">
+                                <span class="tip"></span>
+                                <span class="fill" data-percentage="{{ game.operation }}"></span>
+                                <p>操作</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- ##### Single Game Review Area End ##### -->
+
+
+
+
+{% endblock %}

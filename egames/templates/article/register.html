@@ -1,0 +1,57 @@
+{% extends 'loginBase.html' %}
+{% load staticfiles %}
+
+{#  注册表单 #}
+{% block register %}
+    <!-- title -->
+	<h1>账户注册</h1>
+	<!-- //title -->
+	<!-- content -->
+	<div class="sub-main-w3">
+		<form action="#" method="post">
+            {% csrf_token %}
+			<h2>Register Now
+				<i class="fas fa-level-down-alt"></i>
+			</h2>
+			<div class="form-style-agile">
+				<label>
+					<i class="fas fa-user"></i>
+					用户名
+				</label>
+				{{ contact.username }}
+                {{ contact.username.error_messages }}
+                {{ contact.username.errors }}
+			</div>
+			<div class="form-style-agile">
+				<label>
+					<i class="fas fa-unlock-alt"></i>
+					密码
+				</label>
+				{{ contact.password1 }}
+                {{ contact.password1.error_messages }}
+                {{ contact.password1.errors }}
+			</div>
+			<div class="form-style-agile">
+				<label>
+					<i class="fas fa-unlock-alt"></i>
+					密码
+				</label>
+				{{ contact.password2 }}
+                {{ contact.password2.errors }}
+                {{ contact.password2.error_messages }}
+			</div>
+			<div class="form-style-agile">
+				<label>
+					<i class="fas fa-user"></i>
+					手机号码
+				</label>
+				{{ contact.mobilePhone }}
+                {{ contact.mobilePhone.errors }}
+                {{ contact.mobilePhone.error_messages }}
+			</div>
+            {{ contact.non_field_errors }}
+			<input type="submit" value="立即注册">
+		</form>
+	</div>
+	<!-- //content -->
+{% endblock %}

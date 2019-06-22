@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>用户注册</title>
+</head>
+     <style type="text/css">
+         body{color:#efd; background:#435; padding:0 5em; margin:0}
+         h1{padding:2em lem; background:#675}
+         h2{color:#bf8; border-top:lpx dotted #fff; margin-top:2em}
+         p{margin: lem 0}
+     </style>
+<body>
+<h1>注册页面：</h1>
+<form method='post' enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ contact.as_p }}
+    {{ contact.non_field_errors }}
+    {{ contact.errors }}
+    <input type="submit" value="提交"/>
+</form>
+</body>
+</html>
