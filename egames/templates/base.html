@@ -1,5 +1,4 @@
 {% load staticfiles %}
-{% load article_extras %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -54,8 +53,11 @@
                             </div>
 
                             {% block userInfo %}
-                                {% if userAuth %}
-                                    {{ userAuth.avater.url }}
+                                {% if request.user.username %}
+
+                                    <div class="comment-author">
+                                            <img src="{{ request.user.avater.url }}" alt="author">
+                                        </div>
                                 {% else %}
                                     <!-- Login Area -->
                                     <div class="login-area">

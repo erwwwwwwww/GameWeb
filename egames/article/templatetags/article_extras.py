@@ -46,16 +46,16 @@ def gamepopular():
 
 
 # 验证用户登入
-@register.simple_tag
-def userAuth():
-    currentRequest = GlobalRequestMiddleware.getRequest()
-    username = currentRequest.session.get('username', None)
-    print('------------用户名:%s-----------'%username)
-    if username :
-        user = User.objects.get(username=username)
-        return user
-    else:
-        return False
+# @register.simple_tag
+# def userAuth():
+#     currentRequest = GlobalRequestMiddleware.getRequest()
+#     username = currentRequest.session.get('username', None)
+#     print('------------用户名:%s-----------'%username)
+#     if username :
+#         user = User.objects.get(username=username)
+#         return user
+#     else:
+#         return False
 
 
 
