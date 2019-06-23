@@ -11,7 +11,7 @@ class UserModel(AbstractUser):
     mobile_phone = models.CharField(max_length=11, null=True, blank=True, verbose_name='手机号码', help_text='手机号码')
     qq = models.CharField(max_length=15, null=True, blank=True, verbose_name='QQ', help_text='QQ')
     company = models.CharField(max_length=50, verbose_name='工作单位', help_text='工作单位')
-    avater = models.ImageField(upload_to='users', verbose_name='用户头像')
+    avater = models.ImageField(upload_to='users', verbose_name='用户头像', default='users/defaultAvater.jpg')
 
 
 # 文章 --内容添加富文本功能
@@ -77,7 +77,7 @@ class Comments(models.Model):
     email = models.EmailField(verbose_name='邮件', help_text='邮件')
     obj = models.CharField(max_length=50, verbose_name='标题', help_text='标题')
     body = models.TextField(verbose_name='内容', help_text='内容')
-    post = models.ForeignKey(Articles, related_name='comments') # 关联文章外键
+    post = models.ForeignKey(Articles, related_name='articleComments') # 关联文章外键
     created = models.DateTimeField(auto_now_add=True, verbose_name='创建时间')
     updated = models.DateTimeField(auto_now=True, verbose_name='更新时间')
     active = models.BooleanField(default=True, verbose_name='是否显示')

@@ -1,5 +1,5 @@
 from django import forms
-from .models import Contact, UserModel
+from .models import Contact, UserModel, Comments
 import re
 from django.core.exceptions import ValidationError
 
@@ -86,6 +86,20 @@ class LoginForm(forms.Form):
                                label='密码',
                                error_messages={'required': '密码不能为空'},
                                widget=forms.PasswordInput(attrs={'required': 'required', 'placeholder': '请输入密码'}))
+
+
+# 文章评论表单
+class CommentsForm(forms.ModelForm):
+    class Meta:
+        model = Comments
+        fields = ['name', 'email', 'obj', 'body']
+        widgets = {
+            'name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': '输入名称'}),
+            'email': forms.EmailInput(attrs={'class': 'form-control', 'placeholder': '请输入邮箱'}),
+            'obj': forms.TextInput(attrs={'class': 'form-control', 'placeholder': '主题'}),
+            'body': forms.Textarea(attrs={'class': 'form-control', 'placeholder': '内容', 'cols': '30', 'rows': '10'})
+
+        }
 
 
 

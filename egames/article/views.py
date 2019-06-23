@@ -1,8 +1,8 @@
 from django.shortcuts import render, get_object_or_404, redirect, HttpResponse
-from .models import GamesReviews, Articles, Contact
+from .models import GamesReviews, Articles, Comments
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from .forms import ContactForm, RegisterForm, LoginForm
-from django.contrib.auth import get_user_model, authenticate, login
+from .forms import ContactForm, RegisterForm, LoginForm, CommentsForm
+from django.contrib.auth import get_user_model, authenticate, login, logout
 
 
 User = get_user_model()
@@ -20,10 +20,30 @@ def gameDetail(request, pk):
     gameImage = game.images.all()
     return render(request, 'article/gameDetail.html', context={'game': game, 'gameImage': gameImage, })
 
+
 # 文章详情页
 def postDetail(request, pk):
     post = get_object_or_404(Articles, pk=pk)
-    return render(request, 'article/postDetail.html', context={'post': post})
+
+    if request.method == 'POST':
+        commentsData = CommentsForm(request.POST)
+        if commentsData.is_valid():
+            commentsData.save(commit=False)
+            commentsData.instance.post_id = post.id
+            commentsData.save()
+
+            return redirect('/egame/post/%s'%pk)
+        else:
+            return HttpResponse('<p>数据验证错误</p>')
+    else:
+        comments = CommentsForm()
+        user = request.user
+        if user.is_authenticated():
+            return render(request, 'article/postDetail.html', context={'post': post,'comments': comments,'user': user},)
+        else:
+            return render(request, 'article/postDetail.html', context={'post': post,'comments': comments})
+
+
 
 
 # 游戏类
@@ -114,6 +134,12 @@ def userLogin(request):
     # get请求
     else:
         return render(request, 'article/login.html', context={'contact': emptyForm})
+
+
+# 退出
+def userLogout(request):
+    logout(request)
+    return redirect('/egame/')
 
 
 

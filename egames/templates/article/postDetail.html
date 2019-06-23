@@ -41,59 +41,27 @@
 
                             <ol>
                                 <!-- Single Comment Area -->
-                                <li class="single_comment_area">
+                                {% for comment in post.articleComments.all %}
+                                    <li class="single_comment_area">
                                     <!-- Comment Content -->
-                                    <div class="comment-content d-flex">
-                                        <!-- 用户头像 -->
-                                        <div class="comment-author">
-                                            <img src="img/bg-img/32.jpg" alt="author">
-                                        </div>
-                                        <!-- 评论信息 -->
-                                        <div class="comment-meta">
-                                            <a href="#" class="post-author">William Smith</a>
-                                            <a href="#" class="post-date">July 12, 2018</a>
-                                            <p>Integer sed facilisis eros. In iaculis rhoncus velit in malesuada. In hac habitasse platea dictumst. Fusce erat ex, consectetur sit amet ornare suscipit, porta et erat. Donec nec nisi in nibh commodo laoreet.</p>
-                                            <a href="#reply" class="reply">Reply</a>
-                                        </div>
-                                    </div>
+                                         <div class="comment-content d-flex">
+                                                <!-- 用户头像 -->
 
-                                    <ol class="children">
-                                        <li class="single_comment_area">
-                                            <!-- Comment Content -->
-                                            <div class="comment-content d-flex">
-                                                <!-- Comment Author -->
                                                 <div class="comment-author">
-                                                    <img src="img/bg-img/33.jpg" alt="author">
+                                                    <img src="img/bg-img/32.jpg" alt="author">
                                                 </div>
-                                                <!-- Comment Meta -->
+                                                <!-- 评论信息 -->
                                                 <div class="comment-meta">
-                                                    <a href="#" class="post-author">Jaku Smith</a>
-                                                    <a href="#" class="post-date">July 12, 2018</a>
-                                                    <p>Facilisis eros. In iaculis rhoncus velit in malesuada. In hac habitasse platea dictumst. Fusce erat ex, consectetur sit amet ornare suscipit, porta et erat. Donec nec nisi in nibh commodo laoreet.</p>
-                                                    <a href="#reply" class="reply">Reply</a>
+                                                    <a href="#" class="post-author">{{ comment.name }}</a>
+                                                    <a href="#" class="post-date">{{ comment.created }}</a>
+                                                    <p>{{ comment.body }}</p>
                                                 </div>
-                                            </div>
-                                        </li>
-                                    </ol>
-                                </li>
 
-                                <!-- Single Comment Area -->
-                                <li class="single_comment_area">
-                                    <!-- Comment Content -->
-                                    <div class="comment-content d-flex">
-                                        <!-- Comment Author -->
-                                        <div class="comment-author">
-                                            <img src="img/bg-img/32.jpg" alt="author">
-                                        </div>
-                                        <!-- Comment Meta -->
-                                        <div class="comment-meta">
-                                            <a href="#" class="post-author">James Carter</a>
-                                            <a href="#" class="post-date">July 12, 2018</a>
-                                            <p>Integer sed facilisis eros. In iaculis rhoncus velit in malesuada. In hac habitasse platea dictumst. Fusce erat ex, consectetur sit amet ornare suscipit, porta et erat. Donec nec nisi in nibh commodo laoreet.</p>
-                                            <a href="#reply" class="reply">Reply</a>
-                                        </div>
-                                    </div>
-                                </li>
+                                         </div>
+                                    </li>
+                                {% endfor %}
+
+
                             </ol>
                         </div>
 
@@ -102,22 +70,23 @@
 
                             <!-- 回复评论表单 -->
                             <div class="contact-form-area">
-                                <form action="#" method="post">
+                                <form action="{% url 'article:postdetial' post.id %}" method="post">
+                                    {% csrf_token %}
                                     <div class="row">
                                         <div class="col-12 col-lg-6">
-                                            <input type="text" class="form-control" id="name" placeholder="Name*">
+                                            {{ comments.name }}
                                         </div>
                                         <div class="col-12 col-lg-6">
-                                            <input type="email" class="form-control" id="email" placeholder="Email*">
+                                            {{ comments.email }}
                                         </div>
                                         <div class="col-12">
-                                            <input type="text" class="form-control" id="subject" placeholder="Website">
+                                            {{ comments.obj }}
                                         </div>
                                         <div class="col-12">
-                                            <textarea name="message" class="form-control" id="message" cols="30" rows="10" placeholder="Message"></textarea>
+                                            {{ comments.body }}
                                         </div>
                                         <div class="col-12">
-                                            <button class="btn egames-btn w-100" type="submit">Submit Comment</button>
+                                            <button class="btn egames-btn w-100" type="submit">提交评论</button>
                                         </div>
                                     </div>
                                 </form>

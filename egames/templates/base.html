@@ -56,12 +56,21 @@
                                 {% if request.user.username %}
 
                                     <div class="comment-author">
-                                            <img src="{{ request.user.avater.url }}" alt="author">
-                                        </div>
+                                        <img src="{{ request.user.avater.url }}" alt="author">
+                                    </div>
+                                    <div class="login-area">
+                                        <a href="{% url 'article:logout' %}"><span>退出登入</span> <i class="fa fa-lock" aria-hidden="true"></i></a>
+                                    </div>
+                                    <div class="login-area">
+                                        <a href=""><span>个人信息</span> <i class="fa fa-lock" aria-hidden="true"></i></a>
+                                    </div>
                                 {% else %}
                                     <!-- Login Area -->
                                     <div class="login-area">
-                                        <a href="#"><span>注册/登入</span> <i class="fa fa-lock" aria-hidden="true"></i></a>
+                                        <a href="{% url 'article:register' %}"><span>注册</span> <i class="fa fa-lock" aria-hidden="true"></i></a>
+                                    </div>
+                                    <div class="login-area">
+                                        <a href="{% url 'article:login' %}"><span>登入</span> <i class="fa fa-lock" aria-hidden="true"></i></a>
                                     </div>
                                 {% endif %}
                             {% endblock %}
