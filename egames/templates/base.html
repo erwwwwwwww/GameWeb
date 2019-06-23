@@ -1,4 +1,5 @@
 {% load staticfiles %}
+{% load article_extras %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -51,10 +52,18 @@
                                     <button type="submit" class="btn"><i class="fa fa-search"></i></button>
                                 </form>
                             </div>
-                            <!-- Login Area -->
-                            <div class="login-area">
-                                <a href="#"><span>登入/注册</span> <i class="fa fa-lock" aria-hidden="true"></i></a>
-                            </div>
+
+                            {% block userInfo %}
+                                {% if userAuth %}
+                                    {{ userAuth.avater.url }}
+                                {% else %}
+                                    <!-- Login Area -->
+                                    <div class="login-area">
+                                        <a href="#"><span>注册/登入</span> <i class="fa fa-lock" aria-hidden="true"></i></a>
+                                    </div>
+                                {% endif %}
+                            {% endblock %}
+
                         </div>
                     </div>
                 </div>

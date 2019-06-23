@@ -1,6 +1,9 @@
 from django import template
 from article.models import Articles, GamesReviews, GameImage
+from django.contrib.auth import get_user_model
 
+
+User = get_user_model()
 register = template.Library()
 
 # 最新文章
@@ -42,7 +45,17 @@ def gamepopular():
     return result
 
 
-
+# 验证用户登入
+@register.simple_tag
+def userAuth():
+    currentRequest = GlobalRequestMiddleware.getRequest()
+    username = currentRequest.session.get('username', None)
+    print('------------用户名:%s-----------'%username)
+    if username :
+        user = User.objects.get(username=username)
+        return user
+    else:
+        return False
 
 
 
