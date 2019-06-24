@@ -24,24 +24,33 @@ def gameDetail(request, pk):
 # 文章详情页
 def postDetail(request, pk):
     post = get_object_or_404(Articles, pk=pk)
+    user = request.user
 
     if request.method == 'POST':
         commentsData = CommentsForm(request.POST)
         if commentsData.is_valid():
-            commentsData.save(commit=False)
-            commentsData.instance.post_id = post.id
-            commentsData.save()
+            if user.is_authenticated():
+                commentsData.save(commit=False)
+                commentsData.instance.name = user.nickname
+                commentsData.instance.post_id = post.pk
+                commentsData.save()
+            else:
+                commentsData.save(commit=False)
+                commentsData.instance.post_id = post.id
+                commentsData.save()
 
-            return redirect('/egame/post/%s'%pk)
+            return redirect('/egame/post/%s' % pk)
+
+
         else:
-            return HttpResponse('<p>数据验证错误</p>')
+            return HttpResponse('<p>数据验证错误%s</p>'%commentsData.errors)
     else:
         comments = CommentsForm()
-        user = request.user
+
         if user.is_authenticated():
             return render(request, 'article/postDetail.html', context={'post': post,'comments': comments,'user': user},)
         else:
-            return render(request, 'article/postDetail.html', context={'post': post,'comments': comments})
+            return render(request, 'article/postDetail.html', context={'post': post,'comments': comments, 'user': None})
 
 
 

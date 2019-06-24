@@ -73,14 +73,15 @@ class GamesReviews(models.Model):
 #评论
 # 不注册可以评论
 class Comments(models.Model):
-    name = models.CharField(max_length=20, verbose_name='名称', help_text='名称')
-    email = models.EmailField(verbose_name='邮件', help_text='邮件')
+    name = models.CharField(max_length=20, verbose_name='名称', help_text='名称', null=True, blank=True)
+    email = models.EmailField(verbose_name='邮件', help_text='邮件', null=True, blank=True)
     obj = models.CharField(max_length=50, verbose_name='标题', help_text='标题')
     body = models.TextField(verbose_name='内容', help_text='内容')
     post = models.ForeignKey(Articles, related_name='articleComments') # 关联文章外键
     created = models.DateTimeField(auto_now_add=True, verbose_name='创建时间')
     updated = models.DateTimeField(auto_now=True, verbose_name='更新时间')
     active = models.BooleanField(default=True, verbose_name='是否显示')
+
 
     class Meta:
         verbose_name = '用户评论'

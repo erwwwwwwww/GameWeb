@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
+{% load article_extras %}
 
 
 {% block gamepost %}
@@ -46,10 +47,16 @@
                                     <!-- Comment Content -->
                                          <div class="comment-content d-flex">
                                                 <!-- 用户头像 -->
+                                                {% if comment.articleComments.author %}
+                                                    <div class="comment-author">
+                                                        <img src="{{ comment.articleComments.author.avater.url }}" alt="author">
+                                                    </div>
+                                                {% else %}
+                                                    <div class="comment-author">
+                                                        <img src="/media/users/defaultAvater.jpg" alt="author">
+                                                    </div>
+                                                {% endif %}
 
-                                                <div class="comment-author">
-                                                    <img src="img/bg-img/32.jpg" alt="author">
-                                                </div>
                                                 <!-- 评论信息 -->
                                                 <div class="comment-meta">
                                                     <a href="#" class="post-author">{{ comment.name }}</a>
@@ -72,7 +79,26 @@
                             <div class="contact-form-area">
                                 <form action="{% url 'article:postdetial' post.id %}" method="post">
                                     {% csrf_token %}
-                                    <div class="row">
+                                    {% if user %}
+                                        <div class="row">
+                                        <div class="col-12">
+                                            {{ user.nickname }}
+                                        </div>
+                                        <div class="comment-author">
+                                            <img src="{{ user.avater.url }}" alt="author">
+                                        </div>
+                                        <div class="col-12">
+                                            {{ comments.obj }}
+                                        </div>
+                                        <div class="col-12">
+                                            {{ comments.body }}
+                                        </div>
+                                        <div class="col-12">
+                                            <button class="btn egames-btn w-100" type="submit">提交评论</button>
+                                        </div>
+                                    </div>
+                                    {% else %}
+                                        <div class="row">
                                         <div class="col-12 col-lg-6">
                                             {{ comments.name }}
                                         </div>
@@ -89,6 +115,8 @@
                                             <button class="btn egames-btn w-100" type="submit">提交评论</button>
                                         </div>
                                     </div>
+                                    {% endif %}
+
                                 </form>
                             </div>
                         </div>
@@ -171,50 +199,20 @@
 
                         <!-- 最新文章边栏小部件 -->
                         <div class="single-widget-area post-widget">
+                            {% lastarticles as articles %}
                             <h4 class="widget-title">最新文章</h4>
                             <!-- Single Post Widget -->
-                            <div class="single-post-area d-flex">
+                            {% for article in articles %}
+                                <div class="single-post-area d-flex">
                                 <div class="blog-thumbnail">
-                                    <img src="img/bg-img/19.jpg" alt="">
+                                    <img src="{{ article.image.url }}" alt="">
                                 </div>
                                 <div class="blog-content">
-                                    <a href="#" class="post-title">New to gaming? Here are some tips</a>
+                                    <a href="{{ article.get_absolute_url }}" class="post-title">{{ article.title }}</a>
                                     <span>Nintendo Wii, PS4, XBox 360</span>
                                 </div>
                             </div>
-
-                            <!-- Single Post Widget -->
-                            <div class="single-post-area d-flex">
-                                <div class="blog-thumbnail">
-                                    <img src="img/bg-img/20.jpg" alt="">
-                                </div>
-                                <div class="blog-content">
-                                    <a href="#" class="post-title">Gaming at a new lever: 2018 new release</a>
-                                    <span>Nintendo Wii, PS4, XBox 360</span>
-                                </div>
-                            </div>
-
-                            <!-- Single Post Widget -->
-                            <div class="single-post-area d-flex">
-                                <div class="blog-thumbnail">
-                                    <img src="img/bg-img/21.jpg" alt="">
-                                </div>
-                                <div class="blog-content">
-                                    <a href="#" class="post-title">2018 Comicon: See the lastest news</a>
-                                    <span>Nintendo Wii, PS4, XBox 360</span>
-                                </div>
-                            </div>
-
-                            <!-- Single Post Widget -->
-                            <div class="single-post-area d-flex">
-                                <div class="blog-thumbnail">
-                                    <img src="img/bg-img/22.jpg" alt="">
-                                </div>
-                                <div class="blog-content">
-                                    <a href="#" class="post-title">New to gaming? Here are some tips</a>
-                                    <span>Nintendo Wii, PS4, XBox 360</span>
-                                </div>
-                            </div>
+                            {% endfor %}
                         </div>
 
                     </div>
