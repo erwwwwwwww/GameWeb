@@ -396,9 +396,11 @@
                                     <a href="#" class="post-comments">2 Comments</a>
                                 </div>
                                 <!-- 内容介绍 -->
-                                {% autoescape on %}
-                                    {{ article.text|safe }}
-                                {% endautoescape %}
+                                <p>
+                                    {% autoescape off %}
+                                        {{ post.detail }}
+                                    {% endautoescape %}
+                                </p>
                             </div>
                         </div>
                         {% empty %}

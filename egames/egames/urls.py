@@ -17,9 +17,12 @@ from django.conf.urls import url, include
 from django.contrib import admin
 from django.conf import settings
 from django.views.static import serve
+import  xadmin
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+    url(r'^xadmin/', xadmin.site.urls),
+    url(r'^ueditor/', include('DjangoUeditor.urls')),
     url(r'^media/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT,}),
     url(r'^egame/', include('article.urls')),
 ]

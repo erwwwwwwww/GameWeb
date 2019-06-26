@@ -39,6 +39,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'article',
     'article.templatetags',
+    'xadmin',
+    'crispy_forms',
+    'reversion',
+    'DjangoUeditor'
 ]
 
 MIDDLEWARE = [

@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from datetime import datetime
 from django.urls import reverse
+from DjangoUeditor.models import UEditorField
 
 # Create your models here.
 
@@ -22,7 +23,9 @@ class Articles(models.Model):
     add_time = models.DateTimeField(auto_now_add=True) # 创建时间
     edit_time = models.DateTimeField(auto_now=True)  # 修改时间
     author = models.ForeignKey(UserModel, verbose_name='作者', related_name='art_author')
-    text = models.TextField(verbose_name='内容', help_text='内容')
+    detail = UEditorField(verbose_name='文章详情', width=600, height=300, toolbars='full',
+                          imagePath='course/ueditor/', filePath='course/ueditor', upload_settings=
+                          {'imageMaxSize': 1204000}, default='')
 
 
     class Meta:

@@ -30,9 +30,11 @@
                                 </div>
                                 <!--文章详情内容-->
 
-                                {% autoescape on %}
-                                    {{ post.text|safe }}
-                                {% endautoescape %}
+                               <p>
+                                    {% autoescape off %}
+                                        {{ post.detail }}
+                                    {% endautoescape %}
+                                </p>
                             </div>
                         </div>
 

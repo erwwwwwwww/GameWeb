@@ -36,7 +36,11 @@
                                     <p>{{ post.add_time }}</p>
                                     <a href="#" class="post-comments">2 Comments</a>
                                 </div>
-                                <p>{{ post.text|slice:'100' }}</p>
+                                <p>
+                                    {% autoescape off %}
+                                        {{ post.detail|slice:100 }}
+                                    {% endautoescape %}
+                                </p>
                             </div>
                         </div>
                             {% empty %}
