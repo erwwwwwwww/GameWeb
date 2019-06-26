@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load staticfiles %}
+{% load article_extras %}
 
 {% block postcategory %}
         <section class="breadcrumb-area bg-img bg-overlay" style="background-image: url({% static 'img/bg-img/3.jpg' %});">
@@ -27,7 +28,7 @@
                             <!-- *** Single Articles Area *** -->
                         <div class="single-articles-area d-flex flex-wrap mb-30">
                             <div class="article-thumbnail">
-                                <img src="{{ post.backImage.url }}" alt="">
+                                <img src="{{ post.image.url }}" alt="">
                             </div>
                             <div class="article-content">
                                 <a href="{{ post.get_absolute_url }}" class="post-title">{{ post.title }}</a>
@@ -43,22 +44,25 @@
                         {% endfor %}
 
 
-                        <!-- ### Pagination Area ### -->
+                        <!-- ### 分页 ### -->
                         <nav aria-label="Page navigation example">
-                            <ul class="pagination mt-100">
+                           <ul class="pagination mt-100">
+                           {% if is_paginated %}
                                 <li class="page-item active">
-                                    {% if postcategory.has_previous %}
-                                        <a href="?page={{ postcategory.previous_page_number }}">上一页</a>
-                                    {% endif %}
+                                   {% if page_obj.has_previous %}
+                                       <a href="?page={{ page_obj.previous_page_number }}">上一页</a>
+                                   {% endif %}
+                               </li>
+                                <li class="page-item">Page {{ page_obj.number }} of {{ paginator.num_pages }}</li>
+                               <li class="page-item">
+                                    {% if page_obj.has_next %}
+                                        <a href="?page={{ page_obj.next_page_number }}">下一页</a>
+                                   {% endif %}
                                 </li>
-                                <li class="page-item">Page {{ postcategory.number }} of {{ postcategory.paginator.num_pages }}</li>
-                                <li class="page-item">
-                                    {% if gamecategory.has_next %}
-                                        <a href="?page={{ postcategory.next_page_number }}">下一页</a>
-                                    {% endif %}
-                                </li>
-                            </ul>
-                        </nav>
+                           {% endif %}
+
+                           </ul>
+                       </nav>
                     </div>
                 </div>
 
@@ -73,7 +77,7 @@
                             <img src="{% static 'img/bg-img/side-img.png' %}" class="side-img" alt="">
                         </div>
 
-                        <!-- Single Widget Area -->
+                        <!-- 游戏视频标签 -->
                         <div class="single-widget-area video-widget">
                             <!-- Single Video Widget -->
                             <div class="single-video-widget d-flex">
@@ -136,52 +140,22 @@
                             </div>
                         </div>
 
-                        <!-- Single Widget Area -->
+                        <!-- 最新文章标签 -->
                         <div class="single-widget-area post-widget">
-                            <h4 class="widget-title">Latest Posts</h4>
+                            {% lastarticles as articles %}
+                            <h4 class="widget-title">最新文章</h4>
                             <!-- Single Post Widget -->
-                            <div class="single-post-area d-flex">
+                            {% for article in articles %}
+                                <div class="single-post-area d-flex">
                                 <div class="blog-thumbnail">
-                                    <img src="{% static 'img/bg-img/19.jpg' %}" alt="">
+                                    <img src="{{ article.image.url }}" alt="">
                                 </div>
                                 <div class="blog-content">
-                                    <a href="#" class="post-title">New to gaming? Here are some tips</a>
+                                    <a href="{{ article.get_absolute_url }}" class="post-title">{{ article.title }}</a>
                                     <span>Nintendo Wii, PS4, XBox 360</span>
                                 </div>
                             </div>
-
-                            <!-- Single Post Widget -->
-                            <div class="single-post-area d-flex">
-                                <div class="blog-thumbnail">
-                                    <img src="{% static 'img/bg-img/20.jpg' %}" alt="">
-                                </div>
-                                <div class="blog-content">
-                                    <a href="#" class="post-title">Gaming at a new lever: 2018 new release</a>
-                                    <span>Nintendo Wii, PS4, XBox 360</span>
-                                </div>
-                            </div>
-
-                            <!-- Single Post Widget -->
-                            <div class="single-post-area d-flex">
-                                <div class="blog-thumbnail">
-                                    <img src="{% static 'img/bg-img/21.jpg' %}" alt="">
-                                </div>
-                                <div class="blog-content">
-                                    <a href="#" class="post-title">2018 Comicon: See the lastest news</a>
-                                    <span>Nintendo Wii, PS4, XBox 360</span>
-                                </div>
-                            </div>
-
-                            <!-- Single Post Widget -->
-                            <div class="single-post-area d-flex">
-                                <div class="blog-thumbnail">
-                                    <img src="{% static 'img/bg-img/22.jpg' %}" alt="">
-                                </div>
-                                <div class="blog-content">
-                                    <a href="#" class="post-title">New to gaming? Here are some tips</a>
-                                    <span>Nintendo Wii, PS4, XBox 360</span>
-                                </div>
-                            </div>
+                            {% endfor %}
                         </div>
 
                     </div>

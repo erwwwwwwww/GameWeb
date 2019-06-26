@@ -27,7 +27,7 @@
                         <div id="gameSlides" class="carousel slide" data-ride="carousel">
                             {# 游戏轮播图 #}
                             <div class="carousel-inner">
-                                {% for foo in gameImage %}
+                                {% for foo in game.images.all %}
                                     <div class="
                                     {% if forloop.counter0 == 0 %}
                                         carousel-item active

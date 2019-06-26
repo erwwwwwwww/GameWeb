@@ -62,21 +62,41 @@
 
 
                     <!-- ### Pagination Area ### -->
-                    <nav aria-label="Page navigation example">
-                            <ul class="pagination mt-100">
+{#                    <nav aria-label="Page navigation example">#}
+{#                            <ul class="pagination mt-100">#}
+{#                                <li class="page-item active">#}
+{#                                    {% if gamecategory.has_previous %}#}
+{#                                        <a href="?page={{ gamecategory.previous_page_number }}">上一页</a>#}
+{#                                    {% endif %}#}
+{#                                </li>#}
+{#                                <li class="page-item">Page {{ gamecategory.number }} of {{ gamecategory.paginator.num_pages }}</li>#}
+{#                                <li class="page-item">#}
+{#                                    {% if gamecategory.has_next %}#}
+{#                                        <a href="?page={{ gamecategory.next_page_number }}">下一页</a>#}
+{#                                    {% endif %}#}
+{#                                </li>#}
+{#                            </ul>#}
+{#                        </nav>#}
+                        <nav aria-label="Page navigation example">
+                           <ul class="pagination mt-100">
+                           {% if is_paginated %}
                                 <li class="page-item active">
-                                    {% if gamecategory.has_previous %}
-                                        <a href="?page={{ gamecategory.previous_page_number }}">上一页</a>
-                                    {% endif %}
+                                   {% if page_obj.has_previous %}
+                                       <a href="?page={{ page_obj.previous_page_number }}">上一页</a>
+                                   {% endif %}
+                               </li>
+                                <li class="page-item">Page {{ page_obj.number }} of {{ paginator.num_pages }}</li>
+                               <li class="page-item">
+                                    {% if page_obj.has_next %}
+                                        <a href="?page={{ page_obj.next_page_number }}">下一页</a>
+                                   {% endif %}
                                 </li>
-                                <li class="page-item">Page {{ gamecategory.number }} of {{ gamecategory.paginator.num_pages }}</li>
-                                <li class="page-item">
-                                    {% if gamecategory.has_next %}
-                                        <a href="?page={{ gamecategory.next_page_number }}">下一页</a>
-                                    {% endif %}
-                                </li>
-                            </ul>
-                        </nav>
+                           {% endif %}
+
+                           </ul>
+                       </nav>
+
+
                 </div>
             </div>
         </div>

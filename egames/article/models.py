@@ -17,7 +17,7 @@ class UserModel(AbstractUser):
 # 文章 --内容添加富文本功能
 class Articles(models.Model):
     title = models.CharField(max_length=80, help_text='标题')
-    image = models.ImageField(upload_to="articleimage", verbose_name="文章主图片", null=True, blank=True)
+    image = models.ImageField(upload_to="articleimage", verbose_name="文章主图片", )
     is_recommend = models.BooleanField(default=False, verbose_name='是否推荐')   # 是否推荐
     add_time = models.DateTimeField(auto_now_add=True) # 创建时间
     edit_time = models.DateTimeField(auto_now=True)  # 修改时间

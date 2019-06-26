@@ -3,6 +3,7 @@ from .models import GamesReviews, Articles, Comments
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from .forms import ContactForm, RegisterForm, LoginForm, CommentsForm
 from django.contrib.auth import get_user_model, authenticate, login, logout
+from django.views.generic import ListView, DetailView,TemplateView
 
 
 User = get_user_model()
@@ -10,15 +11,28 @@ User = get_user_model()
 # Create your views here.
 
 
-# 访问主页
+# 访问主页 --视图函数
 def index(request):
     return render(request, 'article/index.html')
+
+
+#访问主页 --类视图
+class IndexView(TemplateView):
+    template_name = 'article/index.html'
+
 
 # 游戏详情页
 def gameDetail(request, pk):
     game = get_object_or_404(GamesReviews, pk=pk)
     gameImage = game.images.all()
     return render(request, 'article/gameDetail.html', context={'game': game, 'gameImage': gameImage, })
+
+
+# 游戏详情页 -- 类视图
+class GameDetailView(DetailView):
+    model = GamesReviews
+    template_name = 'article/gameDetail.html'
+    context_object_name = 'game'
 
 
 # 文章详情页
@@ -55,7 +69,7 @@ def postDetail(request, pk):
 
 
 
-# 游戏类
+# 游戏类 -- 函数视图
 def gamecategory(request):
     gameList = GamesReviews.objects.all()
     paginator = Paginator(gameList, 5)
@@ -70,7 +84,17 @@ def gamecategory(request):
     return render(request, 'article/gameCategory.html', context={'gamecategory': contacts})
 
 
-# 文章类
+# 游戏 -- 类视图
+class GameCategoryView(ListView):
+    template_name = 'article/gameCategory.html'
+    model = GamesReviews
+    paginate_by = 5
+    ordering = '-created'
+    context_object_name = 'gamecategory'
+
+
+
+# 文章分类 --函数视图
 def postcategory(request):
     articleList = Articles.objects.all()
     paginator = Paginator(articleList, 5)
@@ -82,6 +106,15 @@ def postcategory(request):
     except EmptyPage:
         contacts = paginator.page(paginator.num_pages)
     return render(request, 'article/postCategory.html', context={'postcategory': contacts})
+
+
+# 文章分类 -- 类视图
+class PostCategoryView(ListView):
+    template_name = 'article/postCategory.html'
+    model = Articles
+    paginate_by = 5
+    ordering = '-add_time'
+    context_object_name = 'postcategory'
 
 
 # 联系
@@ -149,6 +182,17 @@ def userLogin(request):
 def userLogout(request):
     logout(request)
     return redirect('/egame/')
+
+
+# 用户信息
+def userInfo(request):
+    user = request.user
+    if user.is_authenticated():
+        userModel = User.objects.get(username=user.username)
+        return render(request, 'article/userInfo.html', context={'contact': userModel})
+    # 重新登入
+    else:
+        return redirect('/egame/login/')
 
 
 
